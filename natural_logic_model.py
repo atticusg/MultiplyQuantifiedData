@@ -166,11 +166,11 @@ def conjunction_phrase(conjunction_signature, relation1, relation2):
 def get_label(relation):
     #converts MacCartney's relations to 3 class NLI labels
     if relation in ["cover", "independence", "reverse entails"]:
-        return "permits"
+        return "neutral"
     if relation in ["entails", "equivalence"]:
-        return "entails"
+        return "entailment"
     if relation in ["alternation", "contradiction"]:
-        return "contradicts"
+        return "contradiction"
 
 def compute_simple_relation(premise, hypothesis):
     #computes the relation between a premise and hypothesis simple sentence

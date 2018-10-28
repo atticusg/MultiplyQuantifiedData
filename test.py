@@ -3,6 +3,15 @@ import fol_model as fol
 import natural_logic_model as nlm
 import data_util
 import json
+
+def convert(label):
+    if label == "entails":
+        return "entailment"
+    if label == "contradicts":
+        return "contradiction"
+    if label == "permits":
+        return "neutral"
+
 if __name__ == '__main__':
     data, _, _ = gd.process_data(1.0)
     if True:
@@ -16,7 +25,7 @@ if __name__ == '__main__':
             if gd.example_to_encoding(premise,hypothesis) != encoding:
                 print("We have a problem with the simple encoding")
             nlm_label = nlm.get_label(nlm.compute_simple_relation(premise, hypothesis))
-            if simple_solutions[json.dumps(encoding)] != nlm_label:
+            if convert(simple_solutions[json.dumps(encoding)]) != nlm_label:
                 print("We have a problem with the simple file")
         print("simple file is good")
     examples = gd.generate_balanced_data("simple_solutions", "boolean_solutions", 100, 0, data,simple_sampling = "level 2", boolean_sampling = "level 1")
@@ -33,6 +42,7 @@ if __name__ == '__main__':
             fol_label = fol.get_label(premise[0], hypothesis[0])
             nlm_label = nlm.get_label(nlm.compute_simple_relation(premise[0], hypothesis[0]))
             if example["gold_label"] != fol_label or fol_label != nlm_label:
+                print(example["gold_label"] , fol_label,nlm_label)
                 print("We have a problem with simple generation")
         else:
             premise1 = premise[0]

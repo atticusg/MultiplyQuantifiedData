@@ -16,10 +16,10 @@ def get_label(premise, hypothesis):
     hypothesis_logical_form = Expression.fromstring(hypothesis.logical_form)
     negated_hypothesis_logical_form = Expression.fromstring("-" + "(" + hypothesis.logical_form + ")")
     if prover.prove(hypothesis_logical_form, [premise_logical_form, premise_assumptions,hypothesis_assumptions]):
-        return "entails"
+        return "entailment"
     if prover.prove(negated_hypothesis_logical_form, [premise_logical_form, premise_assumptions,hypothesis_assumptions]):
-        return "contradicts"
-    return "permits"
+        return "contradiction"
+    return "neutral"
 
 def build_simple_file(name):
     #This function builds a dictionary with encoded simple sentence NLI inputs
