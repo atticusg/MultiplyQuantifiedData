@@ -20,10 +20,9 @@ class sentence:
         self.verb_index = 0#ensures a non-negated verb is conjugated for first person present
         if negate:
             self.negation = "does not"
-            self.verb_index = 2#ensures a verb following negation is in bare form
         self.string = self.construct_string([self.subject_determiner,self.subject_adjective,self.subject_noun,self.negation,self.adverb,self.verb[self.verb_index],self.string_object_determiner,self.object_adjective,self.object_noun])
         if self.negation == "":
-            self.emptystring = self.construct_emptystring([self.subject_determiner,self.subject_adjective,self.subject_noun,self.negation,"",self.adverb,self.verb[self.verb_index],self.string_object_determiner,self.object_adjective,self.object_noun])
+            self.emptystring = self.construct_emptystring([self.subject_determiner,self.subject_adjective,self.subject_noun,self.negation,self.adverb,self.verb[self.verb_index],self.string_object_determiner,self.object_adjective,self.object_noun])
         else:
             self.emptystring = self.construct_emptystring([self.subject_determiner,self.subject_adjective,self.subject_noun,self.negation,self.adverb,self.verb[self.verb_index],self.string_object_determiner,self.object_adjective,self.object_noun])
         self.construct_logical_form_joint_predicates()
@@ -75,6 +74,8 @@ class sentence:
         for word in lst:
             if word == "not every":
                 result += "notevery" + " "
+            elif word == "does not":
+                result += "doesnot" + " "
             elif word != "":
                 result += word + " "
             else:
@@ -186,9 +187,9 @@ def parse_simple_sentence(data, input_sentence):
     #Takes a simple input_sentence and outputs the corresponding
     #instance of the sentence class
     words = input_sentence.split()
-    if words[0] == "not":
+    if words[0] == "notevery":
         subject_determiner = "not every"
-        words = words[2:]
+        words = words[1:]
     else:
         subject_determiner = words[0]
         words = words[1:]
@@ -197,26 +198,29 @@ def parse_simple_sentence(data, input_sentence):
         words = words[1:]
     else:
         subject_adjective = ""
+        words = words[1:]
     subject_noun = words[0]
     words = words[1:]
-    if words[0] == "does" and words[1] == "not":
+    if words[0] == "doesnot":
         negation = True
-        words = words[2:]
+        words = words[1:]
     else:
         negation = False
+        words = words[1:]
     if words[0] in data["adverbs"]:
         adverb = words[0]
         words = words[1:]
     else:
         adverb = ""
+        words = words[1:]
     verb = ""
     for verb_list in data["transitive_verbs"]:
         if words[0] in verb_list:
             verb = verb_list
     words = words[1:]
-    if words[0] == "not":
+    if words[0] == "notevery":
         object_determiner = "not every"
-        words = words[2:]
+        words = words[1:]
     else:
         object_determiner = words[0]
         words = words[1:]
@@ -225,11 +229,8 @@ def parse_simple_sentence(data, input_sentence):
         words = words[1:]
     else:
         object_adjective = ""
+        words = words[1:]
     object_noun = words[0]
-    if object_determiner == "any":
-        object_determiner = "no"
-    if subject_determiner == "any":
-        subject_determiner = "no"
     if not verify_parse(data, subject_noun, verb, object_noun, negation, adverb, subject_adjective, object_adjective, subject_determiner, object_determiner):
         return None
     return [sentence(subject_noun, verb, object_noun, negation, adverb, subject_adjective, object_adjective, subject_determiner, object_determiner)]

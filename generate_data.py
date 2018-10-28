@@ -424,15 +424,15 @@ def generate_balanced_data(simple_filename, boolean_filename, simple_size, boole
     for i in range(label_size):
         encoding = json.loads(weighted_selection(ekeys, ecounts))
         premise, hypothesis = encoding_to_example(data,encoding)
-        examples.append((premise.string, "entails", hypothesis.string))
+        examples.append((premise.emptystring, "entailment", hypothesis.emptystring))
     for i in range(label_size):
         encoding = json.loads(weighted_selection(ckeys, ccounts))
         premise, hypothesis = encoding_to_example(data,encoding)
-        examples.append((premise.string, "contradicts", hypothesis.string))
+        examples.append((premise.emptystring, "contradiction", hypothesis.emptystring))
     for i in range(label_size):
         encoding = json.loads(weighted_selection(pkeys, pcounts))
         premise, hypothesis = encoding_to_example(data,encoding)
-        examples.append((premise.string, "permits", hypothesis.string))
+        examples.append((premise.emptystring, "neutral", hypothesis.emptystring))
     bool_label_size = int(boolean_size/3)
     bool_e,bool_c,bool_p = split_dict(boolean_filename, [100000]*19)
     bool_ekeys = list(bool_e.keys())
