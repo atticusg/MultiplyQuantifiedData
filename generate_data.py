@@ -445,3 +445,8 @@ def generate_balanced_data(simple_filename, boolean_filename, simple_size, boole
     examples += generate_balanced_boolean_data(bool_pkeys, "permits", keys_and_counts, boolean_sampling, bool_label_size, data)
     random.shuffle(examples)
     return examples
+
+def create_corpus(size, filename):
+    data, _, _ = process_data(1.0)
+    examples = generate_balanced_data("simple_solutions", "boolean_solutions", size, 0, data, simple_sampling = "level 2", boolean_sampling = "level 0")
+    save_data(examples, filename)
