@@ -3,4 +3,4 @@ We provide code to automatically generate NLI data. See the [paper](http://nlp.s
 
 ## How to generate Data
 
-Import the file [generate_data.py](https://github.com/atticusg/MultiplyQuantifiedData/generate_data.py) and use the function create_corpus which takes a filename argument and a corpus size argument. 
+Import the file [generate_data.py](https://github.com/atticusg/MultiplyQuantifiedData/blob/master/generate_data.py) and use the function create_corpus which takes a filename argument and a corpus size argument. 
