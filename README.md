@@ -3,7 +3,11 @@ We provide code to automatically generate NLI data. See the paper for details.
 
 ## How to Generate Data
 
-Import the file generate_data.py and use the function create_corpus which takes a filename argument and a corpus size argument.
+Import the file generate_data.py and use the function create_corpus to make data. Then run make_subphrase_labels.py to generate labels for the semantic relation between each aligned subphrase. The data named "0gendata.\*" is the most difficult fair generalization task, and the higher the number in front the easier the task.
+
+Here is a image describing the order of the labels for each example:
+
+![image](labeltree.png)
 
 ## Important Information About This Data
 The data generated from this program is not intended to contain sentences that are genuinely natural language. Instead, this data is intended to isolate the task of learning the first order logical structure that occurs in natural language.
